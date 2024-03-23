@@ -109,8 +109,9 @@
             <div class="mobile-personal-beats">
               <h1 class="head">Make Payments</h1>
               
-              <form action="" method="post" id="giftCardForm">
-                  <label for="email">Follow steps to make Payments(for Ghanaians only).</label>
+              <form action="" method="post" id="giftCardForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <label for="email">Follow steps to make Payments (for Ghanaians only).</label>
                 
             
                   <select name="giftCardType" id="networkType">

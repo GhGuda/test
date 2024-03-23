@@ -12,6 +12,6 @@ urlpatterns = [
     path('wallet', views.wallet, name="wallet"),
     path('transactions', views.transactions, name="transactions"),
     path('setting', views.setting, name="setting"),
-    path('makepayment', views.makepayment, name="makepayment"),
-    path("verify_payment/<str:ref>", views.verify_payment, name="verify-payment"),
+    # path('makepayment', views.makepayment, name="makepayment"),
+    path("verify_payment", views.verify_payment, name="verify_payment"),
 ]

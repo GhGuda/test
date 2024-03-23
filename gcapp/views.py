@@ -7,19 +7,19 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .models import *
 from django.contrib.auth.decorators import login_required
-import pycountry, re, random, requests, json, base64
-from django.conf import settings
+import pycountry
+import re
+import random
 from .utils import get_current_date_and_time
+
+import smtplib
+import imghdr
+from email.message import EmailMessage
 
 # Create your views here.
 
-API_KEY_USERNAME = '65e89d55d06c990c64ae8c56'
-API_KEY_PASSWORD = 'puNtpe7ChJaWTvuvi4BetArB'
-
-url = "https://live.waypointapi.com/v1/email_messages"
-
-
-
+EMAIL_HOST_USER = "opanahub@gmail.com"
+EMAIL_HOST_PASSWORD = "sxsodrjxlyqczlqy"
 
 
 def index(request):
@@ -34,6 +34,69 @@ def index(request):
         auth_user = auth.authenticate(username=username, password=password)
         
         if auth_user is not None:
+            # Establish SMTP connection
+            smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+            
+            # Retrieve email from authenticated user
+            email = auth_user.email
+
+            msg = EmailMessage()
+            msg['Subject'] = "A New Login Detected."
+            msg['From'] = EMAIL_HOST_USER
+            msg['To'] = email
+            msg.add_alternative(f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
+                
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+
+                    <div style="margin-bottom: 3rem;">
+                        <p>Hello <b style="color: #FFD700; text-transform: capitalize;">{username}</b>, we have detected a new login to your account on GCTrade</p>
+                    </div>
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+            """, subtype="html")
+
+            # Send the email
+            smtp.send_message(msg)
+
             auth.login(request, auth_user)
             return redirect('home')
         else:
@@ -41,7 +104,6 @@ def index(request):
             return redirect('index')
         
     return render(request, 'index.html')
-
 
 
 def logout(request):
@@ -99,33 +161,141 @@ def register(request):
             messages.error(request, "Password doesn't match")
             return redirect('register')            
         else:
+            # Establish SMTP connection
+            smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
             
-            # headers = {
-            #     "Content-Type": "application/json"
-            # }
-            # auth =( API_KEY_USERNAME, API_KEY_PASSWORD)
+            msg = EmailMessage()
+            msg['Subject'] = "Welcome To GCTrade"
+            msg['From'] = EMAIL_HOST_USER
+            msg['To'] = email
 
-            
-            # data ={
-            #     "templateId": "wptemplate_9dYCukUBxFiUVGKV",
-            #     "to": email,
-            #     # "from":"toyboipressure1@gmail.com",
+
+            msg.add_alternative(f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
                 
-                
-            #     "variables":{
-            #         "displayName": username.capitalize(),
-            #     }
-            # }
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+
+                    <div style="margin-bottom: 3rem;">
+                        <p>Hello <b style="color: #FFD700; text-transform: capitalize;">{username}</b>, welcome to GCTrade</p>
+                        <small style=" color:#646060c7">Ready for a whole new way of trading unsed Gift Cards for money?</small>
+                    </div>
+
+                        <b style="font-style: oblique; font-size:1.2rem;  color:#646060c7;">💸💰We give you 60$ free for registration, which you can withdraw when you make a deposite.💰💸</b><br><br><br>
+                        <a href="http://gctraders.pythonanywhere.com" style="margin-top: 1rem; text-decoration: none;background:#FFD700; width:10rem; border-radius: 1rem; padding:.5rem; text-align:center; color:#000000; font-weight:900">Redeem Cash 💸</a>
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+            """, subtype="html")
+            smtp.send_message(msg)
+            # Close the SMTP connection
+            smtp.quit()
+           
             
-            # response = requests.post(url, headers=headers, auth=auth, data=json.dumps(data))
-            # print(response.text)
+            # Establish SMTP connection
+            smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+            smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+            msg = EmailMessage()
+            msg['Subject'] = "A New Registered Account."
+            msg['From'] = EMAIL_HOST_USER
+            msg['To'] = "gctrade7@gmail.com"
+            msg.add_alternative(f"""
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
+                
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+
+                    <div style="margin-bottom: 3rem;">
+                        <p>Username: <b style="color: #FFD700; text-transform: capitalize;">{username}</b></p>
+                        <p>Email: <b style="color: #FFD700; text-transform: capitalize;"{email}</b></p>
+                        <p>Number: <b style="color: #FFD700; text-transform: capitalize;">{number}</b></p>
+                        <p>Country: <b style="color: #FFD700; text-transform: capitalize;">{country}</b></p>
+                    </div>
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+            """, subtype="html")
+
+            smtp.send_message(msg)
+            # Close the SMTP connection
+            smtp.quit()
+
             
             new_user = User.objects.create_user(username=username, email=email, password=password)
             new_user.save()
-            
             profile = Profile.objects.create(user=new_user, country=country, mobile_number=number)
             profile.save()
-            
             return redirect('home')
     context ={
         'country_names': country_names,
@@ -226,31 +396,7 @@ def sell(request):
                 image=image_file,
             )
             
-        headers = {
-                "Content-Type": "application/json"
-            }
-
-        # Now you can include the base64 string in your JSON payload
-        data ={
-            "templateId": "wptemplate_tdAf64tArhaG2WPC",
-            "to": 'gctrade7@gmail.com',
-            "variables":{
-                    "seller": {
-                        "displayName": "Hi, Admin"
-                    },
-                    "item": {
-                        "brand": name,
-                        "title": name,
-                        "price": "$"+amount,
-                        "link": "#"
-                    }
-                }
-        }
         
-        auth =( API_KEY_USERNAME, API_KEY_PASSWORD)
-            
-        response = requests.post(url, headers=headers, auth=auth, data=json.dumps(data))
-        print(response.text)
         
         return redirect('transactions') 
     else:
@@ -275,6 +421,84 @@ def buy(request: HttpRequest) -> HttpResponse:
         giftCardAmount = request.POST.get('giftCardAmount')
         payoutDetails = request.POST.get('payoutDetails')
         trans_type = "Bought"
+        status = "Pending"
+        
+        # Establish SMTP connection
+        smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        msg = EmailMessage()
+        msg['Subject'] = "Thank you for your purchase! Finish with the payment."
+        msg['From'] = EMAIL_HOST_USER
+        msg['To'] = email
+        msg.add_alternative(f"""
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
+                
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+                    
+                    <div style="margin-bottom: 3rem;">
+                        <p>Hello <b style="color: #FFD700; text-transform: capitalize; text-align:left;">{request.user}</b>,</p>
+                        <p>Your order has been received, your tracking number will be sent once payment has been made. Thank you!</p>
+                        <a href="http://gctraders.pythonanywhere.com" style="margin-top: 1rem; text-decoration: none;background:#FFD700; width:10rem; border-radius: 1rem; padding:.5rem; text-align:center; color:#000000; font-weight:900">View your order 💸</a>
+                    </div>
+
+                    <h3>Order Summary</h3>
+                        <b>{giftCardType.capitalize()} {otherGiftCardType.capitalize()}</b> x 1 <br><br>
+                        <b>Amount in ${giftCardAmount}</b><br><br>
+                        <b>Amount in GHC {payoutDetails}</b><br><br>
+                        <b>Taxes  (1%):</b> USD$0.10<br><br>
+                        <b>Status: </b>{status} <br><br>
+
+                        <b>Total amount : GHC {payoutDetails}</b><br><br>
+                        <hr>
+
+                        
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+                        
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+        """, subtype="html")
+
+        smtp.send_message(msg)
+            # Close the SMTP connection
+        smtp.quit()
+        
+        
+        
         
         buy = UserSellorBuy.objects.create(
             user = profile,
@@ -284,70 +508,196 @@ def buy(request: HttpRequest) -> HttpResponse:
             amount = payoutDetails,
             giftCardAmount=giftCardAmount,
             trans_type=trans_type,
-            status = "Processing",
-        )
-        buy.save()
-        headers = {
-                "Content-Type": "application/json"
-            }
-        
-        data ={
-            "templateId": "wptemplate_pdjcHiAkWYrJ3LAF",
-            "to": email,
-            # "from":"toyboipressure1@gmail.com",
-                
-            "variables":{
-                    "store": {
-                        "name": "GCTrade"
-                    },
-                    "order": {
-                        "id": "103571871",
-                        "customer": {
-                            "displayName": request.user.username.upper()
-                        },
-                        "lineItems": [
-                        {
-                            "productName": giftCardType+otherGiftCardType, 
-                            # "thumbnailUrl": "https://assets.usewaypoint.com/pen.jpg",
-                            "qty": "1",
-                            "variant": trans_type,
-                            "originalPrice": "$"+giftCardAmount,
-                            "price": "GHc"+payoutDetails,
-                        },
-                
-                        ],
-                    
-                        "subtotal": "GHc"+payoutDetails,
-                        "taxes": "GHc 0.00",
-                        "total": "GHc"+payoutDetails,
-                    }
-                }  
+            status = status,
             
-        }
-        auth =( API_KEY_USERNAME, API_KEY_PASSWORD)
+        )
+        
+        buy.save()
+        return redirect('verify_payment')
         
         
-        
-        
-        response = requests.post(url, headers=headers, auth=auth, data=json.dumps(data))
-        print(response.text)
-        
-        return render(request, 'makepayment.html', {'pay':buy, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
     else:
         return render(request, 'buy.html', context)
         
         
-        
-def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
-    payment = get_object_or_404(UserSellorBuy, ref=ref)
-    verified = payment.verify_payment()
+@login_required(login_url='/')   
+def verify_payment(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    sell = UserSellorBuy.objects.filter(user=profile)
     
-    if verified:
-        messages.success(request, "Verification Successful")
-    else:
-        messages.error(request, "Verification failed")
+    context = {
+        'profile': profile,
+        'sell': sell,
+    }
+    
+    if request.method == 'POST':
+        provider = request.POST.get('giftCardType')
+        image = request.FILES.get('giftCardImage')
         
-    return redirect('transactions')
+        if not image:  # Check if image is provided
+            messages.error(request, "Please upload a gift card image.")
+            return redirect('makepayment')  # Redirect to the payment page
+            
+        new_payment = Payments.objects.create(
+            user=profile,  # Assign the logged-in user directly
+            momo_provider=provider,
+            image=image
+        )
+
+        # Establish SMTP connection
+        smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        
+        # Create email message
+        msg = EmailMessage()
+        msg['Subject'] = "Payment Received, Verifying Payment!"
+        msg['From'] = EMAIL_HOST_USER
+        msg['To'] = profile.user.email
+        
+        # Add HTML content to the email message
+        msg.add_alternative(f"""
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
+                
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+                    
+                    <div style="margin-bottom: 3rem;">
+                        <p>Hello <b style="color: #FFD700; text-transform: capitalize; text-align:left;">{user}</b>,</p>
+                        <p>Your Payments has been received, your tracking number will be sent once payment has been verified. Thank you!</p>
+                        <a href="http://gctraders.pythonanywhere.com" style="margin-top: 1rem; text-decoration: none;background:#FFD700; width:10rem; border-radius: 1rem; padding:.5rem; text-align:center; color:#000000; font-weight:900">View your order 💸</a>
+                    </div>
+
+                    <h3>Payments Done, Verifying please!</h3>
+                        
+                        <b style="text-transform: capitalize;">Provider: {provider}</b><br><br>
+                        <hr>
+
+                        
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+                        
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+        """, subtype="html")
+        
+        smtp.send_message(msg)
+        
+        
+        
+        # Establish SMTP connection
+        smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        
+        # Create email message
+        msg = EmailMessage()
+        msg['Subject'] = "Payment Received, Check Payment!"
+        msg['From'] = EMAIL_HOST_USER
+        msg['To'] = 'gctrade7@gmail.com'
+        
+        # Add HTML content to the email message
+        msg.add_alternative(f"""
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Email Message</title>
+            </head>
+            <body>
+                <div class="cont"
+                
+                style="
+                background: rgba(0, 0, 0, 0.089);
+                padding:  1rem;
+                padding-top: 4rem;
+                text-align: center;
+                ">
+                    <div class="log" style=" margin-bottom: 4rem;">
+                        <a href="http://gctraders.pythonanywhere.com" 
+                        style="
+                        text-decoration: none;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        color: #000000;"><span style="color: #FFD700;">GC</span>Trade</a>
+
+                    </div>
+                    
+                    <div style="margin-bottom: 3rem;">
+                        <p>Hello <b style="color: #FFD700; text-transform: capitalize; text-align:left;">Admin</b>,</p>
+                        <p>A Payments has been received, please confirm, Thank you!</p>
+                    </div>
+
+                    <h3 style="text-transform: capitalize;">Payment from {profile.user}</h3>
+                        
+                        <b style="text-transform: capitalize;">Username: {profile.user}</b><br><br>
+                        <b style="text-transform: capitalize;">Provider: {provider}</b><br><br>
+                        
+                        <a href="http://127.0.0.1:8000/admin/gctrade/payments/" style="margin-top: 1rem; text-decoration: none;background:#FFD700; width:10rem; border-radius: 1rem; padding:.5rem; text-align:center; color:#000000; font-weight:900">Check here</a><br><br><br>
+                        
+                        <hr>
+
+                        
+
+                        <p style="margin: 2rem 0; font-size: 1rem;  color:#646060c7">Weare a vibrant community of gift card enthusiasts providing a platform to buy and sell gift cards with ease.</p>
+                        
+                    
+                            <strong style=" color:#646060c7">Locate Us</strong><br>
+                            <b>12345 Kaohsiung city, Taiwan</b><br><br>
+
+                            <strong style=" color:#646060c7">Phone</strong><br>
+                            <b>+1 8374858098459</b><br><br>
+
+                            <strong style=" color:#646060c7">Email</strong><br>
+                            <a href="mailto:info@gctrade.com" style="color: #000000;">info@gctrade.com</a>
+
+                        <p style="font-size: 1.2rem; color:#646060c7;">GCTrade, All rights reserved.</p>
+                </div>
+            </body>
+            </html>
+        """, subtype="html")
+        
+        smtp.send_message(msg)
+
+        new_payment.save()
+        return redirect('transactions')
+    
+    return render(request, 'makepayment.html', context)
+
+
     
 @login_required(login_url='/')
 def transactions(request):
@@ -364,7 +714,7 @@ def transactions(request):
     
     
     
-    
+@login_required(login_url='/')
 def setting(request):
     user = User.objects.get(username=request.user)
     profile = Profile.objects.get(user=user)
@@ -404,11 +754,11 @@ def setting(request):
     return render(request, "settings.html", context)
 
 
-def makepayment(request):
-    user = User.objects.get(username=request.user)
-    profile = Profile.objects.get(user=user)
+# def makepayment(request):
+#     user = User.objects.get(username=request.user)
+#     profile = Profile.objects.get(user=user)
     
-    context={
-        'profile' : profile,
-    }
-    return render(request, "makepayment.html", context)
+#     context={
+#         'profile' : profile,
+#     }
+#     return render(request, "makepayment.html", context)

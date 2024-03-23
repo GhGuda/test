@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 admin.site.register(Profile)
 admin.site.register(GiftCard)
-# admin.site.register(UserBuy)
+admin.site.register(Payments)
 admin.site.register(UserSellImage)
     
 

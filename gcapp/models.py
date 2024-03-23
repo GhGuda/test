@@ -3,9 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
-import secrets
 # Create your models here.
-
 
 
 STATUS =(
@@ -79,27 +77,7 @@ class UserSellorBuy(models.Model):
         
     class Meta:
         ordering = ('-date',)
-     
-    if trans_type == "Bought":
-        def __str__(self):
-            return f" {self.user} paid {self.amount}"
-    else:
-        def __str__(self):
-            return f" {self.user} Sold {self.giftCardType} for ${self.amount}"
-    
-    def save(self, *args, **kwargs) -> None:
-        while not self.ref:
-            ref = secrets.token_urlsafe(50)
-            object_with_similar_ref = UserSellorBuy.objects.filter(ref=ref)
-            
-            if not object_with_similar_ref:
-                self.ref = ref
-        super().save(*args, **kwargs)
-        
-    def amount_value(self) -> int:
-        return self.amount * 100
-    
-    # 
+
     
 
 class UserSellImage(models.Model):
@@ -109,3 +87,14 @@ class UserSellImage(models.Model):
         return f" {self.user.user.user} sold {self.user.gift_card_name} image {self.image}"
 
 
+
+
+
+
+class Payments(models.Model):
+    user = models.ForeignKey(Profile, related_name='image', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='payment_images')
+    momo_provider = models.CharField(max_length=100 , null=True, blank=True)
+    def __str__(self):
+        return f"{self.user} payment through {self.momo_provider}"
+    
