@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCTrade - Wallet</title>
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/dashm.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +21,7 @@
           <li class="nav-item ">
             <b></b>
             <b></b>
-            <a href="/home">
+            <a href="/main">
               <i class="fa fa-home nav-icon"></i>
               <span class="nav-text">Home</span>
             </a>
@@ -83,7 +84,7 @@
 
         </ul>
       </nav>
-      
+
 
       <section class="content">
 
@@ -117,11 +118,11 @@
                     </div>
                 </div>
                 <div class="act">
-                    <a href="/makepayment" class="first">Top-Up 💰</a>
-                    <a href="/sell" class="third">Sell Card💰</a>
-                    {% comment %} <a href="#" class="sec">Withdraw 💸</a> {% endcomment %}
+                  <a href="/verify_payment" class="first">Top-Up 💰</a>
+                  <a href="/sell" class="third">Sell Card💰</a>
+                  {% comment %} <a href="#" class="sec">Withdraw 💸</a> {% endcomment %}
                 </div>
-                <p class="here">Deposite or sell a card to redeem your 60$ free bonus.</p>
+                  <p class="here">Deposite an amount of $30 or sell a card of 30$ to redeem your 60$ free bonus.</p>
               </div>
 
               <div class="mobile-personal-beats">
@@ -138,7 +139,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+
                         {% comment %} <tr>
                             <td data-label="Recent Transactions">Transaction 2</td>
                             <td data-label="Transaction Type">Type 2</td>
@@ -147,17 +148,17 @@
                             <td data-label="Status">Pending</td>
                         </tr> {% endcomment %}
                         <!-- Add more rows as needed -->
-    
+
                     </tbody>
                     </table>
                     <p>{{profile.user|capfirst}}, you don’t have any Wallet activities yet...</p>
                 </div>
             </div>
-            
+
         </div>
       </section>
     </main>
-    
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/dash.js' %}"></script>

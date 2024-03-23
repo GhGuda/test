@@ -89,8 +89,6 @@ const giftCardTypes = [
     "Amazon",
     "iTunes",
     "Google Play",
-    "Visa",
-    "Mastercard",
     "Starbucks",
     "Walmart",
     "Target",

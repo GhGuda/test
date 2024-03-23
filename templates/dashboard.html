@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GCTrade - Dashboard</title>
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static "css/dashm.css" %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,7 +85,7 @@
         </ul>
       </nav>
 
-      
+
 
       <section class="content">
 
@@ -99,7 +100,7 @@
                 <h4>{{profile.user|capfirst}}</h4>
                 <img src="{{profile.profile_img.url}}" alt="">
             </div>
-            
+
             <div class="active-calories">
               <p class="head">Account Balance</p>
 
@@ -117,11 +118,11 @@
               </div>
           </div>
           <div class="act">
-              <a href="/makepayment" class="first">Top-Up 💰</a>
+              <a href="/verify_payment" class="first">Top-Up 💰</a>
               <a href="/sell" class="third">Sell Card💰</a>
               {% comment %} <a href="#" class="sec">Withdraw 💸</a> {% endcomment %}
           </div>
-          <p class="here">Deposite or sell a card to redeem your 60$ free bonus.</p>
+          <p class="here">Deposite an amount of $30 or sell a card of 30$ to redeem your 60$ free bonus.</p>
           </div>
 
             <div class="mobile-personal-beats">
@@ -161,7 +162,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    
+
                         <tr>
                           <td data-label="Gift Card Image">
                             <img src="{{ sold.images.first.image.url }}" style="width:6rem; height:4rem; border-radius: 1rem;">
@@ -195,7 +196,7 @@
                        </thead>
                         <tr>
                           {% comment %} <td data-label="Gift Card Image">
-                            {% comment %} <img src="{{ sold.images.first.image.url }}" style="width:6rem; height:4rem; border-radius: 1rem;"> 
+                            {% comment %} <img src="{{ sold.images.first.image.url }}" style="width:6rem; height:4rem; border-radius: 1rem;">
                             <p> No image yet</p>
                           </td> {% endcomment %}
                           <td data-label="Recent Transactions">{{sold.giftCardType}} </td>
@@ -215,8 +216,8 @@
                       </tr>
                       {% endif %}
                       {% endfor %}
-                      
-  
+
+
                   </tbody>
                   </table>
                   {% else %}
@@ -227,7 +228,7 @@
         </div>
       </section>
     </main>
-    
+
 
 
     <script src="{% static 'js/dash.js' %}"></script>

@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCTrade - Buy</title>
+    <link rel="shortcut icon" href="{% static "img/bg.jpg" %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static "css/buy.css" %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +21,7 @@
           <li class="nav-item ">
             <b></b>
             <b></b>
-            <a href="/home">
+            <a href="/main">
               <i class="fa fa-home nav-icon"></i>
               <span class="nav-text">Home</span>
             </a>
@@ -66,7 +67,7 @@
           <li class="nav-item ">
             <b></b>
             <b></b>
-            <a href="/transaction">
+            <a href="/transactions">
               <i class="fa fa-handshake nav-icon"></i>
               <span class="nav-text">Transactions</span>
             </a>
@@ -84,7 +85,7 @@
         </ul>
       </nav>
 
-      
+
 
       <section class="content">
 
@@ -102,12 +103,12 @@
 
             <div class="mobile-personal-beats">
                 <h1 class="head">Buy Gift Card</h1>
-                
+
                 <form action="" method="post" id="giftCardForm">
                   {% csrf_token %}
                   <label for="email">Enter Your Email</label>
                   <input type="email" name="email" id="email" placeholder="Enter Your Email" value="{{profile.user.email}}" required>
-                  
+
                   <label for="giftCardType">Select a gift card type</label>
                   <select name="giftCardType" id="giftCardType">
                     <option value="" hidden>Select a gift card type</option>
@@ -115,22 +116,22 @@
                 <div id="otherGiftCardTypeInput" style="display: none;">
                     <label for="otherGiftCardType">Enter Gift Card Type</label><br>
                     <input type="text" name="otherGiftCardType" id="otherGiftCardType" placeholder="Enter Gift Card Type">
-                </div>                            
-              
+                </div>
+
                   <!-- <label for="giftCardECode">Enter Gift Card E-code (Optional)</label>
                   <input type="text" name="giftCardECode" id="giftCardECode" placeholder="Enter Gift Card E-code (Optional)"> -->
-              
+
                   <label for="giftCardAmount">Gift Card Amount To Buy</label>
                   <input type="number" name="giftCardAmount" id="giftCardAmount" placeholder="Gift Card Amount To Buy" required>
 
                   <label for="payoutDetails">Amount To Pay (Ghana Cedis)</label>
                   <input type="text" name="payoutDetails" id="payoutDetails" readonly required>
-              
+
                   <!-- Optional: Display the dollar rate -->
                   <p id="dollarRateDisplay"></p>
-                    
+
                     <button type="submit">Proceed to Pay</button>
-                    
+
                 </form>
             </div>
         </div>
@@ -144,8 +145,8 @@
             </ul>
         </div>
 
-            
-        
+
+
       </section>
     </main>
 

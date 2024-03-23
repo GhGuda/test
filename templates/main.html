@@ -16,14 +16,14 @@
 <body>
     <div class="container">
         <nav class="navLinks" id="navbar">
-            <a href="#" class="logo">GC<span class="logo-span">Trade</span></a>
-        
+            <a href="/main" class="logo">GC<span class="logo-span">Trade</span></a>
+
             <div class="toggler">
                 <div class="line"></div>
                 <div class="line"></div>
                 <div class="line"></div>
             </div>
-        
+
             <ul class="menu main">
                 <li><a href="register" class="aa"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li>
@@ -36,7 +36,7 @@
                     </ul>
                 </li>
                 {% comment %} <li><a href="orders" class="aa" ><i class="fa-solid ff fa-ticket"></i> Orders</a></li> {% endcomment %}
-                <li><a href="wallet" class="aa"><i class="fa-solid ff fa-money-check-dollar"></i> Wallet</a></li>
+                <li><a href="/wallet" class="aa"><i class="fa-solid ff fa-money-check-dollar"></i> Wallet</a></li>
                 <li><a href="/transactions" class="aa"><i class="fa-solid ff fa-handshake"></i> Transactions</a></li>
                 <li><a href="/logout" class="aa"><i class="fa-solid fa-"></i> Logout</a></li>
                 <div class="noti">
@@ -44,7 +44,7 @@
                     <span class="one">1</span>
                 </div>
             </ul>
-        
+
             <div class="user">
                 <img src="{% static 'img/bg.jpg' %}" alt="">
                 {% if profile.country == 'Ghana' or 'ghana' %}
@@ -52,13 +52,13 @@
                 {% elif profile.country == 'Nigeria' or 'nigeria' %}
                 <img src="{% static 'img/nigeria.jpg' %}" alt="">
                 {% endif %}
-        
+
                 <i class="far bb fa-lightbulb" id="light-icon"></i>
                 <i class="fas bb fa-moon" id="dark-icon"></i>
             </div>
         </nav>
-        
-        
+
+
     </div>
 
 
@@ -75,7 +75,7 @@
             </div>
             <img src="{% static 'img/allcard-removebg-preview.png' %}" alt="">
         </div>
-    
+
         <div class="wedo">
             <div class="type">
                 <p>We accept over 50 Gift Card brands, including  <span class="multiple-text">  </span></p>
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="lome">
-                    
+
                     <hr>
 
                     <div class="lomer">
@@ -120,23 +120,23 @@
                             <button>CHF</button>
                             <button>NZD</button>
                         </div>
-        
+
                         <div class="vv">
                             <P>Face Value</P>
                             <p>rate</p>
                         </div>
-        
+
                         <div class="mm">
                             <p>50-200 (include Ecode)</p>
                             <p>GH₵ {{cards.rate_for_range}}</p>
                         </div>
-        
+
                         <div class="hh">
                             <p>1-49 (include Ecode)</p>
                             <p>GH₵ {{cards.rate_for_single}}</p>
                         </div>
                     </div>
-        
+
                     <div class="actions">
                         <a href="/sell"><i class="fa-solid fa-money-check-dollar"></i> Sell</a>
                         <a href="/buy"><i class="fa-solid fa-money-check-dollar"></i> Buy</a>
@@ -170,7 +170,7 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <div class="saycard">
                     <b class="coma"><i class="fa-solid fa-quote-left"></i></b>
                     <p>We couldn't be happier with the service provided by this company. They exceeded our expectations in every way!</p>
@@ -183,7 +183,7 @@
                             <img src="{% static 'img/r.jpeg' %}" alt="">
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </section>
 
@@ -195,7 +195,7 @@
 
             <span>Experience the best of <a class="logoc">GC</a><span class="logo-span">Trade</span> on your phone or tablet. Available for iOS and Android operating systems.</span>
             <div class="app-downloads">
-                
+
                 <a href="#" class="brands-first">
                     <i class="fa-brands fa-apple"></i>
                     <p>Get on iPhone</p>
@@ -207,7 +207,7 @@
                 </a>
             </div>
         </section>
-        
+
 
 
 
@@ -255,9 +255,9 @@
                 &copy; {{ time|date:"Y" }} GCTrade. All rights reserved.
             </div>
         </footer>
-        
+
     </div>
-    
+
 
     <script src="https://unpkg.com/scrollreveal"></script>
 

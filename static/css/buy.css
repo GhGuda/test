@@ -231,15 +231,15 @@ form{
 }
 
 form input, select{
-  padding: 1rem .5rem;
-  caret-color: #FFD700;
-  border: none;
+  padding: 1rem .5rem !important;
+  caret-color: #FFD700 !important;
+  border: none !important;
   box-shadow: rgba(0, 0, 0, 0.418) 1px 1px 6px !important;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-
+  border-radius: 1rem !important;
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  color: #000;
 }
 
 input[type="text"] {

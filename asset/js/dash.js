@@ -173,27 +173,20 @@ togglePaymentMethodFields();
 
 
 //Payout
-// Function to calculate and display the payout amount
 function calculatePayout() {
   // Get the gift card amount entered by the user
   const giftCardAmount = parseFloat(document.getElementById("giftCardAmount").value);
   
   // Check if the input is a valid number
   if (!isNaN(giftCardAmount)) {
-      // Get the current dollar rate in Ghana (replace this with your actual method of fetching the rate)
-      const dollarRateInGhana = 12.5; // For example, assume the rate is 6.0 cedis for 1 dollar
+      // Perform your calculation here (for example, multiplying by a fixed rate)
+      const payoutAmount = giftCardAmount * 13; // Example: 90% payout rate
       
-      // Calculate the payout amount based on the gift card amount and the dollar rate
-      const payoutAmount = giftCardAmount * dollarRateInGhana;
-      
-      // Display the payout details to the user
-      const payoutDetails = document.getElementById("payoutDetails");
-      payoutDetails.innerHTML = `<li>Payout Amount: GHC ${payoutAmount.toFixed(2)}</li>`; // Displaying the payout amount in cedis
-      payoutDetails.style.display = "block";
+      // Update the payout details input field with the calculated amount
+      document.getElementById("payoutDetails").value = payoutAmount.toFixed(1);
   } else {
-      // If the input is not a valid number, hide the payout details
-      const payoutDetails = document.getElementById("payoutDetails");
-      payoutDetails.style.display = "none";
+      // If the input is not a valid number, clear the payout details field
+      document.getElementById("payoutDetails").value = "";
   }
 }
 

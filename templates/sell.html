@@ -21,7 +21,7 @@
           <li class="nav-item ">
             <b></b>
             <b></b>
-            <a href="/home">
+            <a href="/main">
               <i class="fa fa-home nav-icon"></i>
               <span class="nav-text">Home</span>
             </a>
@@ -76,7 +76,7 @@
           <li class="nav-item">
             <b></b>
             <b></b>
-            <a href="settings.html">
+            <a href="/setting">
               <i class="fa fa-gear nav-icon"></i>
               <span class="nav-text">Settings</span>
             </a>
@@ -85,7 +85,7 @@
         </ul>
       </nav>
 
-      
+
 
       <section class="content">
 
@@ -103,7 +103,7 @@
 
             <div class="mobile-personal-beats">
                 <h1 class="head">Sell Gift Card</h1>
-                
+
                 <form action="" method="post" id="giftCardForm" enctype="multipart/form-data">
                   {% csrf_token %}
                     <label for="giftCardType">Enter Gift Card Type</label>
@@ -116,9 +116,11 @@
 
                     <label for="giftCardAmount">Enter Gift Card Amount</label>
                     <input type="number" name="giftCardAmount" id="giftCardAmount" placeholder="Enter Gift Card Amount" required>
-                    <ul id="payoutDetails" style="display: none;">
-                        <!-- Payout details will be displayed here -->
-                    </ul>
+
+
+                    <label for="payoutDetails">Payout (Ghana Cedis)</label>
+                    <input type="text" name="payoutDetails" id="payoutDetails" placeholder="GHS 0.0" readonly required>
+
 
                     <label for="paymentMethod">Select Payment Method</label>
                     <select name="paymentMethod" id="paymentMethod">
@@ -126,7 +128,7 @@
                         <option value="bank">Bank</option>
                         <option value="momo">Momo</option>
                     </select>
-                
+
                     <!-- Bank Fields -->
                     <div id="bankFields" style="display: none; display: flex;
                     flex-direction: column;">
@@ -134,16 +136,16 @@
                         <select name="bank_name" id="bankSelect">
                             <option value="" hidden>Select a bank</option>
                         </select>
-                    
+
                         <!-- Input field for entering a bank name -->
                         <div id="otherBankInput" style="display: none;">
                             <!-- <label for="otherBankName">Enter Bank Name</label> -->
                             <input type="text" name="bank_name" id="otherBankName" placeholder="Enter bank name">
                         </div>
-                    
+
                         <input type="text" name="accountNumber" id="accountNumber" placeholder="Account Number">
                     </div>
-                    
+
                     <!-- Momo Fields -->
                     <div id="momoFields" style="display: none; display: flex;
                     flex-direction: column;">
@@ -156,7 +158,7 @@
                         </select>
                         <input type="text" name="momoNumber" id="momoNumber" placeholder="Mobile Money Number">
                     </div>
-                
+
                     <div class="img">
                         <div class="ic">
                             <i class="fa-solid fa-camera"></i>
@@ -174,15 +176,18 @@
         <div class="left">
             <h1 class="head">Terms and Conditions</h1>
             <ul>
+                <li>1 dollar is equal to 13 Ghana cedis, per our rate.</li>
                 <li>Please upload clear front and back Gift Card picture.</li>
                 <li>If your Gift Card is Amazon, you will get a better exchange rate with receipt.</li>
                 <li>Once you upload your Gift Card picture, our team will work on it.</li>
                 <li>Card will be processed after uploading. This processe takes 1 - 2 minutes, some cards takes 5minutes.</li>
+                <li>You can check the status of your gift card at any time.</li>
+                <li>Payouts will be made to the number you will provide  in this form.</li>
             </ul>
         </div>
 
-            
-        
+
+
       </section>
     </main>
 

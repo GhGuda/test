@@ -17,7 +17,7 @@
   .process-mtn, .process-voda, .process-airtel {
     display: none;
   }
-</style>  
+</style>
 <body>
     <main>
       <nav class="main-menu">
@@ -26,7 +26,7 @@
           <li class="nav-item ">
             <b></b>
             <b></b>
-            <a href="/home">
+            <a href="/main">
               <i class="fa fa-home nav-icon"></i>
               <span class="nav-text">Home</span>
             </a>
@@ -90,7 +90,7 @@
         </ul>
       </nav>
 
-      
+
 
       <section class="content">
 
@@ -108,13 +108,13 @@
 
             <div class="mobile-personal-beats">
               <h1 class="head">Make Payments</h1>
-              
+
               <form action="" method="post" id="giftCardForm" enctype="multipart/form-data">
                 {% csrf_token %}
                   <label for="email">Follow steps to make Payments (for Ghanaians only).</label>
-                
-            
-                  <select name="giftCardType" id="networkType">
+
+
+                  <select name="giftCardType" id="networkType" required>
                       <option value="" hidden>Select Network Provider</option>
                       <option value="mtn">MTN</option>
                       <option value="voda">Telecel(Vodaphone)</option>
@@ -131,7 +131,7 @@
                       <li>Enter Number (0505646381 - Agyei Donkor )</li>
                       <li>Confrim Number</li>
                       <li>Enter Amount</li>
-                      <li>Enter Refrence(ML629C157)</li>
+                      <li>Enter Reference {{reference}}</li>
                       <li>Then follow steps to complete payments.</li>
                       <li>Send a screenshot of payments here</li>
                   </div>
@@ -146,7 +146,7 @@
                       <li>Enter Number (0505646381 - Agyei Donkor)</li>
                       <li>Confrim Number (0505646381 - Agyei Donkor)</li>
                       <li>Enter Amount</li>
-                      <li>Enter Refrence(ML629C157)</li>
+                      <li>Enter Reference {{reference}}</li>
                       <li>Then follow steps to complete payments.</li>
                       <li>Send a screenshot of payments here</li>
                   </div>
@@ -161,7 +161,7 @@
                       <li>Enter Number (0505646381 - Agyei Donkor)</li>
                       <li>Confrim Number (0505646381 - Agyei Donkor)</li>
                       <li>Enter Amount</li>
-                      <li>Enter Refrence(ML629C157)</li>
+                      <li>Enter Reference {{reference}}</li>
                       <li>Then follow steps to complete payments.</li>
                       <li>Send a screenshot of payments here</li>
                   </div>
@@ -170,24 +170,24 @@
                       <div class="ic">
                           <i class="fa-solid fa-camera"></i>
                       </div>
-                      <input type="file" name="giftCardImage" id="giftCardImage" multiple accept="image/*" required>
+                      <input type="file" name="giftCardImage" id="giftCardImage" accept="image/*" required>
                       <label for="giftCardImage">Upload Gift Card Image(s)</label>
                   </div>
                   <div id="imagePreview"></div>
 
-                      
+
                   <button type="submit" id="proceedButton">Proceed</button>
               </form>
           </div>
       </div>
-                
+
                 <script>
                   document.getElementById('networkType').addEventListener('change', function() {
                       var selectedOption = this.value;
                       var processMtn = document.querySelector('.process-mtn');
                       var processVoda = document.querySelector('.process-voda');
                       var processAirtel = document.querySelector('.process-airtel');
-              
+
                       if (selectedOption === 'mtn') {
                           processMtn.style.display = 'block';
                           processVoda.style.display = 'none';
@@ -206,16 +206,16 @@
                           processAirtel.style.display = 'none';
                       }
                   });
-              
+
                   document.getElementById('giftCardImage').addEventListener('change', function() {
                       var previewContainer = document.getElementById('imagePreview');
                       previewContainer.innerHTML = ''; // Clear previous previews
-              
+
                       var files = this.files;
                       for (var i = 0; i < files.length; i++) {
                           var file = files[i];
                           var reader = new FileReader();
-              
+
                           reader.onload = function(e) {
                               var img = document.createElement('img');
                               img.src = e.target.result;
@@ -225,20 +225,20 @@
                               img.style.marginBottom = '10px';
                               previewContainer.appendChild(img);
                           }
-              
+
                           reader.readAsDataURL(file);
                       }
-          
+
                   });
               </script>
-              
-                
-                
+
+
+
             </div>
         </div>
 
-            
-        
+
+
       </section>
     </main>
 
